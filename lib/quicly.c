@@ -1385,6 +1385,11 @@ quicly_error_t quicly_get_stats(quicly_conn_t *conn, quicly_stats_t *stats)
     stats->rtt = conn->egress.loss.rtt;
     stats->loss_thresholds = conn->egress.loss.thresholds;
     stats->cc = conn->egress.cc;
+
+	// Add RTT debug logs
+	printf("[DEBUG] RTT(ms): minimum: %u, smoothed: %u, variance: %u, latest: %u\n",
+		   stats->rtt.minimum, stats->rtt.smoothed, stats->rtt.variance, stats->rtt.latest);
+
     /* convert `exit_slow_start_at` to time spent since the connection was created */
     if (stats->cc.exit_slow_start_at != INT64_MAX) {
         assert(stats->cc.exit_slow_start_at >= conn->created_at);
